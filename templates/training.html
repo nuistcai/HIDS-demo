@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Training Progress</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <style>
+        body {
+            background-image: url('/static/detect.jfif'); /* 修改为你的背景图片路径 */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            background-color: white; /* 白色背景 */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+        }
+        .progress {
+            height: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Training Progress</h2>
+        <div class="progress">
+            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0%;" id="progress-bar"></div>
+        </div>
+        <p id="progress-text"></p>
+        <div id="log-container" style="margin-top: 20px;">
+            <h4>Training Logs:</h4>
+            <ul id="training-log" style="list-style-type: none; padding: 0;"></ul>
+        </div>
+    </div>
+
+    <script>
+        const socket = io();
+
+        socket.on('training_progress', function(data) {
+            const progressBar = document.getElementById('progress-bar');
+            const progressText = document.getElementById('progress-text');
+            const logContainer = document.getElementById('training-log');
+            const epoch = data.epoch;
+            const accuracy = (data.accuracy * 100).toFixed(2);
+            const loss = data.loss.toFixed(4);
+            const val_accuracy = (data.val_accuracy * 100).toFixed(2);
+            const val_loss = data.val_loss.toFixed(4);
+
+            progressBar.style.width = `${(epoch / 5) * 100}%`;
+            progressText.innerText = `Epoch: ${epoch} - Accuracy: ${accuracy}% - Loss: ${loss} - Validation Accuracy: ${val_accuracy}% - Validation Loss: ${val_loss}`;
+
+            const logEntry = document.createElement('li');
+            logEntry.innerText = `Epoch ${epoch}: Accuracy: ${accuracy}%, Loss: ${loss}, Validation Accuracy: ${val_accuracy}%, Validation Loss: ${val_loss}`;
+            logContainer.appendChild(logEntry);
+        });
+
+        socket.on('training_complete', function() {
+            window.location.href = '/results';
+        });
+    </script>
+</body>
+</html>

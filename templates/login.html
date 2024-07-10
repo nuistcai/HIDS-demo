@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            background-image: url('/static/login.jfif'); /* 修改为你的背景图片路径 */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            background-color: white; /* 白色背景 */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+        .title {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 32px;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        }
+    </style>
+</head>
+<body>
+    <div class="title">入侵检测系统</div>
+    <div class="container">
+        <h2>Login</h2>
+        <form method="POST" action="{{ url_for('login') }}">
+            {{ form.hidden_tag() }}
+            <div class="form-group">
+                {{ form.username.label(class="form-control-label") }}
+                {{ form.username(class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.password.label(class="form-control-label") }}
+                {{ form.password(class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.captcha.label(class="form-control-label") }}
+                <div class="d-flex align-items-center">
+                    {{ form.captcha(class="form-control") }}
+                    <span class="ml-2">{{ form.captcha_value }}</span>
+                </div>
+            </div>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-primary") }}
+            </div>
+        </form>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="alert alert-{{ category }} mt-2" role="alert">
+                    {% for category, message in messages %}
+                        {{ message }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+    </div>
+</body>
+</html>

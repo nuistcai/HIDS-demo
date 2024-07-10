@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>IDS Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            background-image: url('/static/index.jfif'); /* 修改为你的背景图片路径 */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            background-color: white; /* 白色背景 */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            color: #333;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>IDS Dashboard</h1>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Type</th>
+                    <th>Status</th>
+                    <th>Timestamp</th>
+                </tr>
+            </thead>
+            <tbody id="ids-table-body">
+                <!-- 动态填充数据 -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('/api/ids_data')
+                .then(response => response.json())
+                .then(data => {
+                    const tableBody = document.getElementById('ids-table-body');
+                    data.forEach(alert => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${alert.id}</td>
+                            <td>${alert.type}</td>
+                            <td>${alert.status}</td>
+                            <td>${alert.timestamp}</td>
+                        `;
+                        tableBody.appendChild(row);
+                    });
+                });
+        });
+    </script>
+</body>
+</html>

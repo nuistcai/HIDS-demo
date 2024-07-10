@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            background-image: url('/static/index.jfif');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 1000px;
+        }
+        h1, h2 {
+            text-align: center;
+        }
+        .row {
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>System Functions</h1>
+        <div class="row">
+            <div class="col-md-6 text-center">
+                <h2>Information Collection</h2>
+                <p>Collects information from various sources to provide a comprehensive overview of the system status.</p>
+                <a href="{{ url_for('info_collection') }}" class="btn btn-primary">Go to Information Collection</a>
+            </div>
+            <div class="col-md-6 text-center">
+                <h2>Port Scanning</h2>
+                <p>Scans open ports on network devices to identify potential vulnerabilities.</p>
+                <a href="{{ url_for('port_scan') }}" class="btn btn-primary">Go to Port Scanning</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 text-center">
+                <h2>Intrusion Detection</h2>
+                <p>Detects unauthorized access or abnormal activities within the network.</p>
+                <a href="{{ url_for('detect') }}" class="btn btn-primary">Go to Intrusion Detection</a>
+            </div>
+            <div class="col-md-6 text-center">
+                <h2>Traffic Capture</h2>
+                <p>Captures network traffic for analysis and monitoring.</p>
+                <a href="{{ url_for('traffic_capture') }}" class="btn btn-primary">Go to Traffic Capture</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h2>Password Brute Force</h2>
+                <p>Performs brute force attacks to test the strength of passwords.</p>
+                <a href="{{ url_for('password_brute_force') }}" class="btn btn-primary">Go to Password Brute Force</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Detection Results</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            background-image: url('/static/background.jpg'); /* 修改为你的背景图片路径 */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            background-color: white; /* 白色背景 */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Detection Results</h2>
+        <p><strong>Training File:</strong> {{ results.train_file }}</p>
+        <p><strong>Testing File:</strong> {{ results.test_file }}</p>
+        <p><strong>Selected Model:</strong> {{ results.model }}</p>
+        <p><strong>Status:</strong> {{ results.status }}</p>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Result</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for detail in results.details %}
+                    <tr>
+                        <td>{{ detail.id }}</td>
+                        <td>{{ detail.result }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <h3>Class Accuracy</h3>
+        <img src="{{ accuracy_plot_url }}" alt="Class Accuracy">
+    </div>
+</body>
+</html>

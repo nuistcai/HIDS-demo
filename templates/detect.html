@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Model Detection</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            background-image: url('/static/detect.jfif'); /* 修改为你的背景图片路径 */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #333;
+        }
+        .container {
+            background-color: white; /* 背景颜色为白色 */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            width: 100%;
+        }
+        h2 {
+            text-align: center;
+        }
+        .model-description {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Model Detection</h2>
+        <form method="POST" action="{{ url_for('detect') }}" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="train_file">Upload Training Dataset</label>
+                <input type="file" class="form-control-file" id="train_file" name="train_file" required>
+            </div>
+            <div class="form-group">
+                <label for="test_file">Upload Testing Dataset</label>
+                <input type="file" class="form-control-file" id="test_file" name="test_file" required>
+            </div>
+            <div class="form-group">
+                <label for="model_select">Select Model</label>
+                <select class="form-control" id="model_select" name="model_select" required>
+                    <option value="CNN">CNN</option>
+                    <option value="LSTM">LSTM</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary" value="Submit">
+            </div>
+        </form>
+        <div class="model-description">
+            <h4>CNN (Convolutional Neural Network)</h4>
+            <p>
+                CNNs are a class of deep neural networks, most commonly applied to analyzing visual imagery. They are also known as shift invariant or space invariant artificial neural networks (SIANN), based on their shared-weights architecture and translation invariance characteristics.
+            </p>
+            <h4>LSTM (Long Short-Term Memory)</h4>
+            <p>
+                LSTMs are a type of recurrent neural network (RNN) capable of learning order dependence in sequence prediction problems. This capability is extremely useful in tasks such as unsegmented, connected handwriting recognition, speech recognition, and anomaly detection in time series data.
+            </p>
+        </div>
+    </div>
+</body>
+</html>

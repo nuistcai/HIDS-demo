@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Information Collection</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Information Collection</h2>
+        <form method="POST" action="{{ url_for('info_collection') }}">
+            {{ form.hidden_tag() }}
+            <div class="form-group">
+                {{ form.query.label(class="form-control-label") }}
+                {{ form.query(class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-primary") }}
+            </div>
+        </form>
+        <h3>Query Results</h3>
+        {% if error_message %}
+            <div class="alert alert-danger">{{ error_message }}</div>
+        {% endif %}
+        {% if query_results %}
+            <ul class="list-group">
+                {% for result in query_results %}
+                    <li class="list-group-item">{{ result }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No results found.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

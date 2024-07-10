@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Data Visualization</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            background-image: url('/static/detect.jfif'); /* 修改为你的背景图片路径 */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            background-color: white; /* 白色背景 */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 1200px;
+        }
+        h2 {
+            text-align: center;
+        }
+        .chart-container {
+            margin-top: 20px;
+        }
+        .btn-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Data Visualization</h2>
+        <div class="chart-container">
+            <h3>Training Data Distribution</h3>
+            <canvas id="trainChart"></canvas>
+        </div>
+        <div class="chart-container">
+            <h3>Testing Data Distribution</h3>
+            <canvas id="testChart"></canvas>
+        </div>
+        <div class="btn-container">
+            <form method="POST" action="{{ url_for('train') }}">
+                <input type="hidden" name="train_filepath" value="{{ train_filepath }}">
+                <input type="hidden" name="test_filepath" value="{{ test_filepath }}">
+                <input type="hidden" name="model_type" value="{{ model_type }}">
+                <button type="submit" class="btn btn-primary">Start Training</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const trainStats = {{ train_stats|tojson }};
+        const testStats = {{ test_stats|tojson }};
+
+        function createChart(ctx, labels, data, title) {
+            return new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: title,
+                        data: data,
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const trainCtx = document.getElementById('trainChart').getContext('2d');
+            const testCtx = document.getElementById('testChart').getContext('2d');
+
+            const trainLabels = trainStats.columns;
+            const trainData = trainStats.data[0];  // 只显示第一行数据的分布
+            createChart(trainCtx, trainLabels, trainData, 'Training Data');
+
+            const testLabels = testStats.columns;
+            const testData = testStats.data[0];  // 只显示第一行数据的分布
+            createChart(testCtx, testLabels, testData, 'Testing Data');
+        });
+    </script>
+</body>
+</html>

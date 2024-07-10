@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Traffic Capture Result</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h2>Traffic Capture Result</h2>
+        <h3>Captured Packets</h3>
+        <canvas id="trafficChart"></canvas>
+        <ul id="packet-list" class="list-group mt-3">
+            <!-- 动态填充数据包信息 -->
+        </ul>
+        <div id="error-message" class="alert alert-danger" style="display: none;"></div>
+    </div>
+
+    <script>
+        const socket = io();
+
+        const trafficChartCtx = document.getElementById('trafficChart').getContext('2d');
+        const trafficChart = new Chart(trafficChartCtx, {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'Packet Length',
+                    data: [],
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 2,
+                    fill: false
+                }]
+            },
+            options: {
+                scales: {
+                    x: {
+                        type: 'linear',
+                        position: 'bottom'
+                    },
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        socket.on('packet', function(data) {
+            const packetList = document.getElementById('packet-list');
+            const listItem = document.createElement('li');
+            listItem.className = 'list-group-item';
+            listItem.innerText = `Packet ${data.number}: Length ${data.length}, Source IP: ${data.src_ip}, Destination IP: ${data.dst_ip}, Protocol: ${data.protocol}`;
+            packetList.appendChild(listItem);
+
+            // 更新图表数据
+            trafficChart.data.labels.push(data.number);
+            trafficChart.data.datasets[0].data.push(data.length);
+            trafficChart.update();
+        });
+
+        socket.on('error', function(data) {
+            const errorMessage = document.getElementById('error-message');
+            errorMessage.innerText = data.message;
+            errorMessage.style.display = 'block';
+        });
+    </script>
+</body>
+</html>

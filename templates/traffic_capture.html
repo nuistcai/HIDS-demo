@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Traffic Capture</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h2>Traffic Capture</h2>
+        <form method="POST" action="{{ url_for('traffic_capture') }}">
+            {{ form.hidden_tag() }}
+            <div class="form-group">
+                {{ form.interface.label(class="form-control-label") }}
+                {{ form.interface(class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.duration.label(class="form-control-label") }}
+                {{ form.duration(class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-primary") }}
+            </div>
+        </form>
+        <h3>Captured Packets</h3>
+        <ul id="packet-list" class="list-group">
+            <!-- 动态填充数据包信息 -->
+        </ul>
+        <div id="error-message" class="alert alert-danger" style="display: none;"></div>
+    </div>
+
+    <script>
+        const socket = io();
+
+        socket.on('packet', function(data) {
+            const packetList = document.getElementById('packet-list');
+            const listItem = document.createElement('li');
+            listItem.className = 'list-group-item';
+            listItem.innerText = `Packet ${data.number}: Length ${data.length}, Info: ${data.info}`;
+            packetList.appendChild(listItem);
+        });
+
+        socket.on('error', function(data) {
+            const errorMessage = document.getElementById('error-message');
+            errorMessage.innerText = data.message;
+            errorMessage.style.display = 'block';
+        });
+    </script>
+</body>
+</html>

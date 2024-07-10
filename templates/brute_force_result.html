@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Brute Force Result</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <style>
+        body {
+            background-image: url('/static/detect.jfif');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #333;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            width: 100%;
+        }
+        h2 {
+            text-align: center;
+        }
+        .result-list {
+            max-height: 400px;
+            overflow-y: auto;
+            margin-top: 20px;
+        }
+        .result-item {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Brute Force Result</h2>
+        <div class="result-list" id="result-list">
+            <!-- 动态填充暴力破解结果 -->
+        </div>
+    </div>
+
+    <script>
+        const socket = io();
+
+        socket.on('brute_force_result', function(data) {
+            const resultList = document.getElementById('result-list');
+            const resultItem = document.createElement('div');
+            resultItem.className = 'result-item';
+            resultItem.innerText = data.result;
+            resultList.appendChild(resultItem);
+        });
+
+        socket.on('connect', function() {
+            console.log('Socket.IO connected!');
+        });
+
+        socket.on('disconnect', function() {
+            console.log('Socket.IO disconnected!');
+        });
+    </script>
+</body>
+</html>
+
+
+

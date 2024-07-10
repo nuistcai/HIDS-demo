@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Port Scanning</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            background-image: url('/static/index.jfif'); /* 修改为你的背景图片路径 */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            background-color: white; /* 白色背景 */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            text-align: center;
+        }
+        h1 {
+            text-align: center;
+        }
+        .result {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Port Scanning</h1>
+        <form method="POST">
+            {{ form.hidden_tag() }}
+            <div class="form-group">
+                {{ form.target.label(class="form-control-label") }}
+                {{ form.target(class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.ports.label(class="form-control-label") }}
+                {{ form.ports(class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-primary") }}
+            </div>
+        </form>
+        {% if scan_results %}
+            <div class="result">
+                <h3>Scan Results:</h3>
+                <ul class="list-group">
+                    {% for result in scan_results %}
+                        <li class="list-group-item">{{ result }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
