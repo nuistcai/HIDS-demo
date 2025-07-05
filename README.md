@@ -14,7 +14,8 @@
 下面一个个介绍我们的模块
 
 
-信息搜集：
+信息搜集模块：
+
 ![image](https://github.com/user-attachments/assets/7f836cf3-369a-4d8d-af20-212a01800cf6)
 
 
