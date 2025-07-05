@@ -3,7 +3,8 @@
 入侵检测是研究生期间做的方向，为了不留遗憾或者说有个好的总结，我将其开发成一套系统，前端（html）+后端（python）的组合，其中有信息搜集、端口扫描、入侵检测、密码爆破等模块。
 
 登录界面为
-​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​![image](https://github.com/user-attachments/assets/83dea202-d2f6-420b-ab3b-4c2a08aeaa11)
+​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​
+![image](https://github.com/user-attachments/assets/83dea202-d2f6-420b-ab3b-4c2a08aeaa11)
 
 
 登录进去的主界面如下：
