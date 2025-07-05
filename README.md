@@ -2,7 +2,7 @@
 
 入侵检测是研究生期间做的方向，为了不留遗憾或者说有个好的总结，我将其开发成一套系统，前端（html）+后端（python）的组合，其中有信息搜集、端口扫描、入侵检测、密码爆破等模块。
 
-登录界面为
+登录页面为
 ​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​
 ![image](https://github.com/user-attachments/assets/83dea202-d2f6-420b-ab3b-4c2a08aeaa11)
 
@@ -33,7 +33,8 @@
 ![image](https://github.com/user-attachments/assets/9612534e-d7fd-4c01-9065-36feab187389)
 
 最后便可以开始训练了，训练结果如下
-![image](https://github.com/user-attachments/assets/6c11876f-4731-4fc8-9a4e-f861ccacd1ee)
+![image](https://github.com/user-attachments/assets/1847ab8e-e187-4f13-9a47-b2aadca25827)
+
 
 总结
 
